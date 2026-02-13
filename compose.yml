@@ -1,0 +1,12 @@
+---
+services:
+  client:
+    build:
+      context: .
+    ports:
+      - "8282:8282"
+    environment:
+      - INTERVAL=120
+      - RTR_DOMAIN=rtr.byzrp.org
+      - VALIDATE=0
+      - MAX_WORKERS=32
