@@ -18,3 +18,5 @@ the nodes' RTR endpoints and ranks them by:
 - *freshness*: how recently the output was observed
 
 The top result is then served by the client's RTR server.
+
+A public instance of this client is deployed at `rtr.rparliament.org:8282`.

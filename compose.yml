@@ -5,8 +5,8 @@ services:
       context: .
     ports:
       - "8282:8282"
+    volumes:
+      - ./root.crt:/usr/local/share/ca-certificates/rparliament.crt:ro
     environment:
       - INTERVAL=120
-      - RTR_DOMAIN=rtr.byzrp.org
-      - VALIDATE=0
-      - MAX_WORKERS=32
+      - RTR_DOMAIN=node.rparliament.org

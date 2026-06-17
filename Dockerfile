@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 #upgrade & python
-RUN apt update && apt upgrade -y && apt autoremove -y && apt install -y python3 python3-pip
+RUN apt update && apt upgrade -y && apt autoremove -y && apt install -y python3 python3-pip ca-certificates
 
 #stayrtr
 COPY --from=rpki/stayrtr /stayrtr /bin/stayrtr
@@ -13,7 +13,8 @@ RUN pip3 install --break-system-packages -r /app/requirements.txt
 
 EXPOSE 8282
 
-CMD ln -sf /proc/1/fd/1 /dev/stdout && \
+CMD update-ca-certificates && \
+    ln -sf /proc/1/fd/1 /dev/stdout && \
     ln -sf /proc/1/fd/2 /dev/stderr && \
     mkdir /app/data/ && cd /app/data && \
     (python3 -m http.server &) && \
