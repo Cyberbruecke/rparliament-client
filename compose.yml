@@ -5,6 +5,7 @@ services:
       context: .
     ports:
       - "8282:8282"
+      - "9282:9282"
     volumes:
       - ./root.crt:/usr/local/share/ca-certificates/rparliament.crt:ro
     environment:
