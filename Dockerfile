@@ -13,7 +13,7 @@ RUN pip3 install --break-system-packages -r /app/requirements.txt
 
 EXPOSE 8282 9282
 
-CMD update-ca-certificates && \
+CMD cat /usr/local/share/ca-certificates/rparliament.crt >> /etc/ssl/certs/ca-certificates.crt && \
     ln -sf /proc/1/fd/1 /dev/stdout && \
     ln -sf /proc/1/fd/2 /dev/stderr && \
     mkdir /app/data/ && cd /app/data && \

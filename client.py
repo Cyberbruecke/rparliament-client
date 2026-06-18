@@ -22,7 +22,7 @@ INTERVAL = int(os.environ.get("INTERVAL", 120))
 RTR_DOMAIN = os.environ["RTR_DOMAIN"]
 VALIDATE = bool(int(os.environ.get("VALIDATE", 1)))
 MAX_WORKERS = int(os.environ.get("MAX_WORKERS", 32))
-RTRDUMP_TIMEOUT = int(os.environ.get("RTRDUMP_TIMEOUT", 20))
+RTRDUMP_TIMEOUT = int(os.environ.get("RTRDUMP_TIMEOUT", 30))
 FRESHNESS_WINDOW = int(os.environ.get("FRESHNESS_WINDOW", 900))
 MAX_CONSECUTIVE_FAILURES = int(os.environ.get("MAX_CONSECUTIVE_FAILURES", 5))
 METRICS_PORT = int(os.environ.get("METRICS_PORT", 9282))
@@ -182,7 +182,8 @@ def run_rtrdump(target: str) -> Tuple[str, subprocess.CompletedProcess]:
     except subprocess.TimeoutExpired:
         PROM_FETCH_TIMEOUT.inc()
         tmp_path.unlink(missing_ok=True)
-        raise
+        log(f"{target}: rtrdump timed out after {RTRDUMP_TIMEOUT}s")
+        return target, subprocess.CompletedProcess(args=[], returncode=1, stdout="", stderr=f"timed out after {RTRDUMP_TIMEOUT}s")
     if proc.returncode == 0:
         os.rename(tmp_path, final_path)
     else:
