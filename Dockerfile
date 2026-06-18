@@ -16,7 +16,7 @@ EXPOSE 8282 9282
 CMD cat /usr/local/share/ca-certificates/rparliament.crt >> /etc/ssl/certs/ca-certificates.crt && \
     ln -sf /proc/1/fd/1 /dev/stdout && \
     ln -sf /proc/1/fd/2 /dev/stderr && \
-    mkdir /app/data/ && cd /app/data && \
+    mkdir -p /app/data/ && cd /app/data && \
     (python3 -m http.server &) && \
     RTR_KEY=/etc/ssl/private/rtr.key && \
     RTR_CERT=/etc/ssl/certs/rtr.crt && \
