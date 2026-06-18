@@ -133,7 +133,8 @@ def main():
                 PROM_DISTINCT_HASHES.set(len(hash_count))
 
                 try:
-                    best_target, metrics = sorted(target_metrics.items(), key=lambda x: (hash_count[x[1]["hash"]], x[1]["n_vrps"], x[1]["time"]), reverse=True)[0]
+                    valid_targets = {t: m for t, m in target_metrics.items() if "hash" in m}
+                    best_target, metrics = sorted(valid_targets.items(), key=lambda x: (hash_count[x[1]["hash"]], x[1]["n_vrps"], x[1]["time"]), reverse=True)[0]
                     best_hash = metrics["hash"]
                     shutil.copyfile(DATA_DIR / f"{best_target}.json", DATA_DIR / "output.new.json")
                     os.rename(DATA_DIR / "output.new.json", DATA_DIR / "output.json")
